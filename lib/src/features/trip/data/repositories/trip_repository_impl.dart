@@ -1,3 +1,4 @@
+import 'package:cabit/src/core/entities/location.dart';
 import 'package:cabit/src/core/errors/failures.dart';
 import 'package:cabit/src/core/types/result.dart';
 import 'package:cabit/src/features/trip/data/datasources/remote/trip_remote_datasource.dart';
@@ -28,6 +29,16 @@ class TripRepositoryImpl implements TripRepository {
       return Result(value: t);
     } catch (e) {
       return Result(failure: ServerFailure(message: 'Something went wrong'));
+    }
+  }
+
+  @override
+  Future<Result<List<Location>>> getSuggestions(String query) async {
+    try {
+      final suggestions = await remoteDataSource.getSuggestions(query);
+      return Result(value: suggestions);
+    } catch (e) {
+      return const Result(failure: ServerFailure(message: 'An unexpected error occurred'));
     }
   }
 }

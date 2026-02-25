@@ -1,10 +1,16 @@
 import 'dart:convert';
+import 'package:cabit/src/core/models/location_model.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:cabit/src/features/trip/data/datasources/remote/trip_remote_datasource.dart';
 import 'package:cabit/src/features/trip/data/models/trip_model.dart';
 import 'package:cabit/src/features/trip/domain/entities/trip.dart';
 
 class TripRemoteDatasourceImpl implements TripRemoteDataSource {
+  final http.Client client;
+
+  TripRemoteDatasourceImpl({required this.client});
+
   static String pickupDateJSON = DateTime.now().toIso8601String();
   String tripJSON =
       """{
@@ -41,5 +47,24 @@ class TripRemoteDatasourceImpl implements TripRemoteDataSource {
     final trips = listMap.map((t) => TripModel.fromJson(t).toEntity()).toList();
 
     return Future.value(trips);
+  }
+
+  @override
+  Future<List<LocationModel>> getSuggestions(String query) async {
+    final url = Uri.parse(
+      'https://nominatim.openstreetmap.org/search?q=$query&format=json&addressdetails=1&limit=5',
+    );
+
+    final response = await client.get(
+      url,
+      headers: {'User-Agent': 'CabBookingApp'}, // Nominatim requires a User-Agent
+    );
+
+    if (response.statusCode == 200) {
+      final List decoded = json.decode(response.body);
+      return decoded.map((item) => LocationModel.fromJson(item)).toList();
+    } else {
+      throw Exception(); // Use your existing exception classes
+    }
   }
 }

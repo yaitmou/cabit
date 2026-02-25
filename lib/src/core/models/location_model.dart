@@ -7,12 +7,12 @@ class LocationModel extends Location {
     return LocationModel(
       lat: (json['lat'] as num).toDouble(),
       lon: (json['lon'] as num).toDouble(),
-      placeName: json['placeName'] as String,
+      placeName: json['display_name'] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'lat': lat, 'lon': lon, 'placeName': placeName};
+    return {'lat': lat, 'lon': lon, 'display_name': placeName};
   }
 
   factory LocationModel.fromEntity(Location entity) {
