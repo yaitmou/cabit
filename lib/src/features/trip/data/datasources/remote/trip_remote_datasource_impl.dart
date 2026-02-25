@@ -20,4 +20,26 @@ class TripRemoteDatasourceImpl implements TripRemoteDataSource {
 
     return Future.value(trip);
   }
+
+  @override
+  Future<List<Trip>> getAllTrips() {
+    String listOfJsonTrips =
+        """[{
+    'route': {'lat': 25.312508, 'lon': 51.444721, 'placeName': 'oxygen park'},
+    'pickupDate': $pickupDateJSON,
+  },
+  {
+    'route': {'lat': 25.312508, 'lon': 51.444721, 'placeName': 'oxygen park'},
+    'pickupDate': $pickupDateJSON,
+  },{
+    'route': {'lat': 25.312508, 'lon': 51.444721, 'placeName': 'oxygen park'},
+    'pickupDate': $pickupDateJSON,
+  }]
+  """;
+
+    final listMap = json.decode(listOfJsonTrips) as List<Map<String, dynamic>>;
+    final trips = listMap.map((t) => TripModel.fromJson(t).toEntity()).toList();
+
+    return Future.value(trips);
+  }
 }

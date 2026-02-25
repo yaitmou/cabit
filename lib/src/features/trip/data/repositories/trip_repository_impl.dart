@@ -20,4 +20,14 @@ class TripRepositoryImpl implements TripRepository {
       return Result(failure: ServerFailure(message: 'Something went wrong'));
     }
   }
+
+  @override
+  Future<Result<List<Trip>>> getAllTrips() async {
+    try {
+      final t = await remoteDataSource.getAllTrips();
+      return Result(value: t);
+    } catch (e) {
+      return Result(failure: ServerFailure(message: 'Something went wrong'));
+    }
+  }
 }

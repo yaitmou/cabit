@@ -7,4 +7,7 @@ abstract class TripRemoteDataSource {
   // use osm (open street map)
   // debouncer
   // Future<Result<List<String>>> getSuggestions();
+
+  // Get the all the trips that we have so far
+  Future<List<Trip>> getAllTrips();
 }
