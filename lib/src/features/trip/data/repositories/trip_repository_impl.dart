@@ -15,7 +15,6 @@ class TripRepositoryImpl implements TripRepository {
     // before calling the remote data source.
     try {
       final t = await remoteDataSource.createTrip(trip);
-
       return Result(value: t);
     } catch (e) {
       return Result(failure: ServerFailure(message: 'Something went wrong'));

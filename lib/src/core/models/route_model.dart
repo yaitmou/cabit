@@ -1,36 +1,31 @@
 import 'package:cabit/src/core/entities/route.dart';
+import 'package:cabit/src/core/models/location_model.dart';
 
 class RouteModel extends Route {
-  const RouteModel({required super.lat, required super.lon, required super.placeName});
+  const RouteModel({required super.from, required super.to});
 
   factory RouteModel.fromJson(Map<String, dynamic> json) {
     return RouteModel(
-      lat: (json['lat'] as num).toDouble(),
-      lon: (json['lon'] as num).toDouble(),
-      placeName: json['placeName'] as String,
+      from: LocationModel.fromJson(json['fom'] as Map<String, dynamic>).toEntity(),
+      to: LocationModel.fromJson(json['to'] as Map<String, dynamic>).toEntity(),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'lat': lat, 'lon': lon, 'placeName': placeName};
+    return {
+      'from': LocationModel.fromEntity(from).toJson(),
+      'to': LocationModel.fromEntity(to).toJson(),
+    };
   }
 
   factory RouteModel.fromEntity(Route entity) {
-    return RouteModel(lat: entity.lat, lon: entity.lon, placeName: entity.placeName);
+    return RouteModel(from: entity.from, to: entity.to);
   }
 
   Route toEntity() {
-    return Route(lat: lat, lon: lon, placeName: placeName);
-  }
-
-  RouteModel copyWith({double? lat, double? lon, String? placeName}) {
-    return RouteModel(
-      lat: lat ?? this.lat,
-      lon: lon ?? this.lon,
-      placeName: placeName ?? this.placeName,
-    );
+    return Route(from: from, to: to);
   }
 
   @override
-  List<Object?> get props => [lat, lon, placeName];
+  List<Object?> get props => [from, to];
 }

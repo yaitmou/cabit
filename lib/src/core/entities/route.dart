@@ -1,11 +1,11 @@
+import 'package:cabit/src/core/entities/location.dart';
 import 'package:equatable/equatable.dart';
 
 class Route extends Equatable {
-  final double lat;
-  final double lon;
-  final String placeName;
+  final Location from;
+  final Location to;
 
-  const Route({required this.lat, required this.lon, required this.placeName});
+  const Route({required this.from, required this.to});
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [from, to];
 }
