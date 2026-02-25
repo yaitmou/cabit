@@ -1,16 +1,15 @@
-# cabit
+# Application Development Using AI Course Project
 
-A new Flutter project.
+This repository was developed in collaboration with HBKU students during the Application Development Using AI Course as part of the 2026 Student Enrichment Cycle.
 
-## Getting Started
+## Purpose
 
-This project is a starting point for a Flutter application.
+The primary objective of this repository is to provide students with a hands-on learning experience that reinforces the concepts taught throughout the course. Through practical implementation, students will gain real-world experience in applying modern development principles.
 
-A few resources to get you started if this is your first Flutter project:
+## Course Overview
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+This course explores how artificial intelligence can enhance and streamline the software development process, with a special focus on implementing Clean Architecture principles. Students will learn to:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Leverage AI tools to improve development efficiency
+- Apply Clean Architecture patterns in real-world scenarios
+- Understand the synergy between AI-assisted development and software best practices
