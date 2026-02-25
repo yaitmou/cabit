@@ -1,16 +1,24 @@
-import 'package:cabit/src/core/models/route_model.dart';
+import 'dart:convert';
+
 import 'package:cabit/src/core/types/result.dart';
-import 'package:cabit/src/features/trip/data/datasources/remote/tirp_remote_datasource.dart';
+import 'package:cabit/src/features/trip/data/datasources/remote/trip_remote_datasource.dart';
 import 'package:cabit/src/features/trip/data/models/trip_model.dart';
+import 'package:cabit/src/features/trip/domain/entities/trip.dart';
 
 class TripRemoteDatasourceImpl implements TripRemoteDataSource {
-  @override
-  Future<Result<TripModel>> createTrip(TripModel trip) {
-    final tripModel = TripModel(
-      route: RouteModel(lat: 25.312508, lon: 51.444721, placeName: 'oxygen park'),
-      pickupDate: DateTime.now(),
-    );
+  static String pickupDateJSON = DateTime.now().toIso8601String();
+  String tripJSON =
+      """{
+    'route': {'lat': 25.312508, 'lon': 51.444721, 'placeName': 'oxygen park'},
+    'pickupDate': $pickupDateJSON,
+  }""";
 
-    return Future.value(Result(value: tripModel));
+  @override
+  Future<Result<Trip>> createTrip(Trip trip) {
+    // called the server and we received a success response
+    final map = json.decode(tripJSON) as Map<String, dynamic>;
+    final trip = TripModel.fromJson(map).toEntity();
+
+    return Future.value(Result(value: trip));
   }
 }
