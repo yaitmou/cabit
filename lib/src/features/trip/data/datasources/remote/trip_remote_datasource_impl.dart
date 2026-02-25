@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cabit/src/core/types/result.dart';
 import 'package:cabit/src/features/trip/data/datasources/remote/trip_remote_datasource.dart';
 import 'package:cabit/src/features/trip/data/models/trip_model.dart';
 import 'package:cabit/src/features/trip/domain/entities/trip.dart';
@@ -14,11 +13,11 @@ class TripRemoteDatasourceImpl implements TripRemoteDataSource {
   }""";
 
   @override
-  Future<Result<Trip>> createTrip(Trip trip) {
+  Future<Trip> createTrip(Trip trip) {
     // called the server and we received a success response
     final map = json.decode(tripJSON) as Map<String, dynamic>;
     final trip = TripModel.fromJson(map).toEntity();
 
-    return Future.value(Result(value: trip));
+    return Future.value(trip);
   }
 }
