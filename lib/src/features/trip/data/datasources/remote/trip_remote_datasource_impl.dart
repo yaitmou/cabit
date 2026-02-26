@@ -12,17 +12,12 @@ class TripRemoteDatasourceImpl implements TripRemoteDataSource {
   TripRemoteDatasourceImpl({required this.client});
 
   static String pickupDateJSON = DateTime.now().toIso8601String();
-  String tripJSON =
-      """{
-    'route': {'lat': 25.312508, 'lon': 51.444721, 'placeName': 'oxygen park'},
-    'pickupDate': $pickupDateJSON,
-  }""";
 
   @override
   Future<Trip> createTrip(Trip trip) {
     // called the server and we received a success response
-    final map = json.decode(tripJSON) as Map<String, dynamic>;
-    final trip = TripModel.fromJson(map).toEntity();
+    // we should be sending a POST request here with map as the body
+    final map = TripModel.fromEntity(trip).toJson();
 
     return Future.value(trip);
   }
@@ -59,6 +54,8 @@ class TripRemoteDatasourceImpl implements TripRemoteDataSource {
       url,
       headers: {'User-Agent': 'CabBookingApp'}, // Nominatim requires a User-Agent
     );
+
+    print(response.body);
 
     if (response.statusCode == 200) {
       final List decoded = json.decode(response.body);

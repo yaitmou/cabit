@@ -1,4 +1,4 @@
-import 'package:cabit/src/core/models/location_model.dart';
+import 'package:cabit/src/core/entities/location.dart';
 import 'package:cabit/src/features/trip/domain/entities/trip.dart';
 
 /// Remote data source interface for API calls
@@ -12,5 +12,7 @@ abstract class TripRemoteDataSource {
   // Get the all the trips that we have so far
   Future<List<Trip>> getAllTrips();
 
-  Future<List<LocationModel>> getSuggestions(String query);
+  Future<List<Location>> getSuggestions(String query);
+
+  // Future<List<String>> getRoutePath();
 }

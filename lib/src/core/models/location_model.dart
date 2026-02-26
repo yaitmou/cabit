@@ -5,8 +5,8 @@ class LocationModel extends Location {
 
   factory LocationModel.fromJson(Map<String, dynamic> json) {
     return LocationModel(
-      lat: (json['lat'] as num).toDouble(),
-      lon: (json['lon'] as num).toDouble(),
+      lat: double.parse(json['lat']),
+      lon: double.parse(json['lon']),
       placeName: json['display_name'] as String,
     );
   }

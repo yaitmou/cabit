@@ -10,6 +10,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   equatable: ^2.0.8
   http: ^1.6.0
+  flutter_map: ^8.2.2
+  latlong2: ^0.9.1
+  flutter_bloc:
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:
