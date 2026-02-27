@@ -1,5 +1,6 @@
 import 'package:cabit/src/core/entities/location.dart';
 import 'package:cabit/src/features/trip/domain/entities/trip.dart';
+import 'package:latlong2/latlong.dart';
 
 /// Remote data source interface for API calls
 abstract class TripRemoteDataSource {
@@ -14,5 +15,5 @@ abstract class TripRemoteDataSource {
 
   Future<List<Location>> getSuggestions(String query);
 
-  // Future<List<String>> getRoutePath();
+  Future<List<LatLng>> getRoutePath(Location from, Location to);
 }

@@ -1,11 +1,20 @@
 import 'package:cabit/src/features/trip/Presentation/bloc/trip_bloc.dart';
+import 'package:cabit/src/features/trip/Presentation/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-class BookNewTripPage extends StatelessWidget {
+class BookNewTripPage extends StatefulWidget {
   const BookNewTripPage({super.key});
+
+  @override
+  State<BookNewTripPage> createState() => _BookNewTripPageState();
+}
+
+class _BookNewTripPageState extends State<BookNewTripPage> {
+  TextEditingController fromController = TextEditingController();
+  TextEditingController toController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +40,7 @@ class BookNewTripPage extends StatelessWidget {
             alignment: AlignmentDirectional.bottomCenter,
 
             child: SizedBox(
-              width: 300,
+              width: 400,
               child: Card(
                 elevation: 8,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -42,81 +51,10 @@ class BookNewTripPage extends StatelessWidget {
                     children: [
                       // The from field
                       // 1. Search Input
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: TextField(
-                          onChanged: (value) {
-                            // This triggers our debounced BLoC event
-                            context.read<TripBloc>().add(LocationQueryChanged(value));
-                          },
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.search),
-                            hintText: "Enter pickup location...",
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
+                      LocationSearch(controller: fromController),
+                      SizedBox(height: 16),
+                      LocationSearch(controller: toController),
 
-                      SizedBox(
-                        height: 300,
-                        child: BlocBuilder<TripBloc, TripState>(
-                          builder: (context, state) {
-                            if (state is LocationSuggestionsLoading) {
-                              return const Center(child: CircularProgressIndicator());
-                            }
-
-                            if (state is LocationSuggestionsError) {
-                              return Center(child: Text(state.message));
-                            }
-
-                            if (state is LocationSuggestionsLoaded) {
-                              final suggestions = state.suggestions;
-
-                              if (suggestions.isEmpty) {
-                                return const Center(child: Text("No locations found."));
-                              }
-
-                              return ListView.separated(
-                                itemCount: suggestions.length,
-                                separatorBuilder: (context, index) => const Divider(),
-                                itemBuilder: (context, index) {
-                                  final location = suggestions[index];
-                                  return ListTile(
-                                    leading: const Icon(Icons.location_on_outlined),
-                                    title: Text(
-                                      location.placeName,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    subtitle: Text(
-                                      "Lat: ${location.lat.toStringAsFixed(4)}, Lon: ${location.lon.toStringAsFixed(4)}",
-                                    ),
-                                    onTap: () {
-                                      // Handle selection (e.g., move to next step or set pin)
-                                      print("Selected: ${location.placeName}");
-                                    },
-                                  );
-                                },
-                              );
-                            }
-
-                            return const Center(child: Text("Start typing to search..."));
-                          },
-                        ),
-                      ),
-                      //
-                      //
-                      //
-                      // Listen the event emitted by the bloc
-
-                      //
-                      //
-                      //
-                      SizedBox(height: 8),
-                      // to Field
-                      TextField(
-                        decoration: InputDecoration(labelText: 'To', icon: Icon(Icons.location_on)),
-                      ),
                       SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,
